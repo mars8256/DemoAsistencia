@@ -23,7 +23,6 @@ public class AlumnoController {
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Alumno>> listar(){
 		return new ResponseEntity<List<Alumno>>(service.listar(), HttpStatus.OK);
-		
 	}
 	
 	
