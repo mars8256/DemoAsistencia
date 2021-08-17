@@ -18,7 +18,9 @@ public class Cursos {
 	@Column(name = "nombre", nullable = false, length = 30)
 	String nombre;
 	
-	@Column(name = "descripcion", nullable = false, length = 50)
+	@Column(name = "descripcion", 
+			nullable = false, 
+			length = 50)
 	String descripcion;
 
 	public Integer getIdCurso() {

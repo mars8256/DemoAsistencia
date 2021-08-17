@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.uspg.dao.IAsignacionDAO;
+import edu.uspg.dao.IAsignacionLibroDAO;
+import edu.uspg.dto.AsignacionLibroDTO;
 import edu.uspg.model.Asignacion;
 import edu.uspg.service.IAsignacionService;
 
@@ -16,6 +18,8 @@ public class AsignacionServiceImpl implements IAsignacionService {
 	@Autowired
 	private IAsignacionDAO dao;
 
+	@Autowired
+	private IAsignacionLibroDAO alDAO;
 	
 	@Override
 	public Asignacion registrar(Asignacion asignacion) {
@@ -41,6 +45,18 @@ public class AsignacionServiceImpl implements IAsignacionService {
 	@Override
 	public List<Asignacion> listar() {
 		return dao.findAll();
+	}
+
+	@Override
+	public Asignacion registrarTransaccional(AsignacionLibroDTO dto) {
+		
+		dto.getAsignacion().getAsignacionDetalle().forEach(det -> det.setAsignacion(dto.getAsignacion()));
+		dao.save(dto.getAsignacion());
+		dto.getLstLibros().forEach(e -> alDAO.registrar(dto.getAsignacion().getIdAsignacion(), e.getIdLibro()));
+		
+		
+		
+		return dto.getAsignacion();
 	}
 
 }

@@ -86,6 +86,32 @@ public class Asignacion {
 	public void setFecha(LocalDateTime fecha) {
 		this.fecha = fecha;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idAsignacion == null) ? 0 : idAsignacion.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Asignacion other = (Asignacion) obj;
+		if (idAsignacion == null) {
+			if (other.idAsignacion != null)
+				return false;
+		} else if (!idAsignacion.equals(other.idAsignacion))
+			return false;
+		return true;
+	}
+	
 	
 	
 }

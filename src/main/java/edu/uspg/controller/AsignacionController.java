@@ -7,7 +7,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-import javax.validation.Valid;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import edu.uspg.dto.AsignacionLibroDTO;
 import edu.uspg.exception.ModeloNotFoundException;
-
 import edu.uspg.model.Asignacion;
 import edu.uspg.service.IAsignacionService;
 
@@ -57,10 +57,11 @@ public class AsignacionController {
 		return resource;
 	}
 	
+	@Transactional
 	@PostMapping( produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE) 
-	public ResponseEntity<Object> registrar(@RequestBody @Valid Asignacion asig) { 
-		System.out.println(asig.getAlumno());
-		Asignacion asignacion = service.registrar(asig);
+	public ResponseEntity<Object> registrar(@RequestBody AsignacionLibroDTO asigDTO) { 
+		
+		Asignacion asignacion = service.registrarTransaccional(asigDTO);
 						
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(asignacion.getId()).toUri();
